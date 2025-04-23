@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Kontak Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-slate-50 py-10 px-4">
+    <div class="max-w-6xl mx-auto bg-white p-6 rounded-xl shadow-md">
+      <h2 class="text-2xl font-bold mb-6 text-slate-800">Data Kontak Form</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-sm border border-slate-200">
+          <thead class="bg-slate-100">
+            <tr
+              id="table-head"
+              class="text-left text-slate-700 font-semibold"
+            ></tr>
+          </thead>
+          <tbody id="table-body" class="text-slate-600"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      const scriptURL = "https://script.google.com/macros/s/AKfycbwSTI04vTYySxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"; // Ganti dengan URL kamu
+
+      fetch(scriptURL)
+        .then((res) => res.json())
+        .then((data) => {
+          if (!data.length) return;
+
+          const tableHead = document.getElementById("table-head");
+          const tableBody = document.getElementById("table-body");
+
+          // Buat kolom header
+          const headers = Object.keys(data[0]);
+          headers.forEach((header) => {
+            const th = document.createElement("th");
+            th.classList.add("px-4", "py-3", "border", "border-slate-200");
+            th.textContent = header;
+            tableHead.appendChild(th);
+          });
+
+          // Buat baris data
+          data.forEach((row) => {
+            const tr = document.createElement("tr");
+            headers.forEach((header) => {
+              const td = document.createElement("td");
+              td.classList.add("px-4", "py-2", "border", "border-slate-200");
+              td.textContent = row[header] || "-";
+              tr.appendChild(td);
+            });
+            tableBody.appendChild(tr);
+          });
+        })
+        .catch((err) => {
+          console.error("Gagal mengambil data:", err);
+        });
+    </script>
+  </body>
+</html>
